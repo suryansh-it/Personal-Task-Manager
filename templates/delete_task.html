@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block title %}Delete Task{% endblock %} {%
+blockcontent %}
+<h2>Delete Task</h2>
+<p>Are you sure you want to delete the task "{{ task.title }}"?</p>
+<form method="POST">
+  <button type="submit" class="btn btn-danger">Delete</button>
+  <button href="{{ url_for('index') }}" class="btn btn-secondary">
+    Cancel
+  </button>
+</form>
+{% endblock %}
