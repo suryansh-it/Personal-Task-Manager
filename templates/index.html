@@ -1,3 +1,5 @@
+<!-- extends parent element (base) properties to child (index) -->
+
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 <h2>Task List</h2>
@@ -6,7 +8,7 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Status</th>
+      <th>Date</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -15,24 +17,29 @@
     <tr>
       <td>{{ task.title }}</td>
       <td>{{ task.description }}</td>
-      <td>{{ 'Done' if task.done else 'Pending' }}</td>
+      <td>{{ task.date_created }}</td>
       <td>
         <a
           href="{{ url_for('edit_task', task_id=loop.index0) }}"
-          class="btn btn-warning"
+          class="btn btn-warning btn-sm"
           >Edit</a
         >
-        <a
-          href="{{ url_for('delete_task', task_id=loop.index0) }}"
-          class="btn btn-danger"
-          >Delete</a
+        <form
+          action="{{ url_for('delete_task', task_id=loop.index0) }}"
+          method="POST"
+          style="display: inline"
         >
-        <a
-          href="{{ url_for('toggle_task', task_id=loop.index0) }}"
-          class="btn btn-secondary"
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+
+        <!-- to pass current iteraion index in loop for a url or function -->
+        <form
+          action="{{ url_for('toggle_task', task_id=loop.index0) }}"
+          method="POST"
+          style="display: inline"
         >
-          {{ 'Mark as Pending' if task.done else 'Mark as Done' }}
-        </a>
+          <button type="submit" class="btn btn-info btn-sm">Done</button>
+        </form>
       </td>
     </tr>
     {% endfor %}
