@@ -17,7 +17,7 @@
     <tr>
       <td>{{ task.title }}</td>
       <td>{{ task.description }}</td>
-      <td>{{ task.date_created }}</td>
+      <td>Added on {{ task.date_created }}</td>
       <td>
         <a
           href="{{ url_for('edit_task', task_id=loop.index0) }}"

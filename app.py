@@ -22,8 +22,11 @@ def create_task():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        task = {'title': title, 'description': description, 'done': False , 'date_created': current_date}
+        current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date created
+        if task['done'] == True:
+            completion_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date completed
+
+        task = {'title': title, 'description': description, 'done': False , 'date_created': current_date ,'date_completed':completion_date}
         tasks.append(task)  #append tasks in lists
         return redirect(url_for('index'))
     return render_template('create_task.html') #renders updated html
@@ -55,6 +58,15 @@ def delete_task(task_id):
         return redirect(url_for('index'))  
     # Redirect to the home page after editing , client side , 
     # It changes the URL in the browser and prevents form resubmission on refresh.
+
+
+@app.route("/tasks_completed/<int:task_id>" , methods=['POST' , 'GET'])
+def task_completed(task_id):
+    task = tasks[task_id]
+    if request.method == 'POST':
+        task['done'] = True
+        return redirect(url_for('index'))
+    return render_template('task_completed.html', task = task, task_id =task_id)
 
 
 if __name__ == '__main__':

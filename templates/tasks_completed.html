@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Create Task{% endblock %} {% block
+content %}
+
+<h2>Task List</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+    <tr>
+      <td>{{ task.title }}</td>
+      <td>{{ task.description }}</td>
+      <td>
+        Added on {{ task.date_created }} ; Completed on {{ task.date_created }}
+      </td>
+    </tr>
+
+    {% endblock %}
+  </tbody>
+</table>
