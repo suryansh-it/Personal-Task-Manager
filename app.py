@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # In-memory storage for tasks
 tasks = []
-
+tasks_done =[]
 
 @app.route("/")
 def index():
@@ -23,10 +23,8 @@ def create_task():
         title = request.form['title']
         description = request.form['description']
         current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date created
-        if task['done'] == True:
-            completion_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date completed
 
-        task = {'title': title, 'description': description, 'done': False , 'date_created': current_date ,'date_completed':completion_date}
+        task = {'title': title, 'description': description, 'done': False , 'date_created': current_date }
         tasks.append(task)  #append tasks in lists
         return redirect(url_for('index'))
     return render_template('create_task.html') #renders updated html
@@ -64,8 +62,11 @@ def delete_task(task_id):
 def task_completed(task_id):
     task = tasks[task_id]
     if request.method == 'POST':
-        task['done'] = True
-        return redirect(url_for('index'))
+        if task['done'] :
+            completion_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date completed
+            task = {'done': True ,'date_completed':completion_date}
+            tasks_done.append(task)  #append tasks in lists
+            
     return render_template('task_completed.html', task = task, task_id =task_id)
 
 

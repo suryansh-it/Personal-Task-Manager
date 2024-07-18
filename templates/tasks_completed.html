@@ -12,7 +12,7 @@ content %}
     </tr>
   </thead>
   <tbody>
-    {% for task in tasks %}
+    {% for task in tasks_done %}
     <tr>
       <td>{{ task.title }}</td>
       <td>{{ task.description }}</td>
@@ -20,7 +20,7 @@ content %}
         Added on {{ task.date_created }} ; Completed on {{ task.date_created }}
       </td>
     </tr>
-
-    {% endblock %}
+    {% endfor %}
   </tbody>
 </table>
+{% endblock %}
