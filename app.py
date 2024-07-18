@@ -53,7 +53,7 @@ def delete_task(task_id):
 
 
 @app.route("/tasks_completed/<int:task_id>" , methods=['POST' , 'GET'])
-def tasks_completed(task_id):
+def tasks_completed(task_id):                       #route for adding tasks to completed task list
     # if request.method == 'POST':  
         task = tasks[task_id]  
         
@@ -62,11 +62,13 @@ def tasks_completed(task_id):
 
         tasks_done.append(task)#append tasks in lists
         tasks.pop(task_id)  
-        # return redirect(url_for('index'))
-        return render_template('tasks_completed.html', tasks_done=tasks_done, task_id= task_id) #renders updated html
+        return redirect(url_for('index'))
+        # return render_template('tasks_completed.html', tasks_done=tasks_done, task_id = task_id) #renders updated html
     
     
-
+@app.route("/completed_tasks")          #route to display template and add it yo base template
+def completed_tasks():
+    return render_template('completed_tasks.html', tasks_done=tasks_done)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
