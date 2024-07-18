@@ -40,34 +40,32 @@ def edit_task(task_id):
         return redirect(url_for('index'))
     return render_template('edit_task.html' , task = task , task_id =task_id)
 
-@app.route("/toggle_task/<int:task_id>", methods=['POST' , 'GET'])
-def toggle_task(task_id):
-    task= tasks[task_id]
-    if request.method == 'POST':
-        task['done'] = not task['done']
-        return redirect(url_for('index'))
-    return render_template('toggle_task.html' , task = task , task_id =task_id)
+
 
 @app.route("/delete_task/<int:task_id>", methods=['POST'])
 def delete_task(task_id):
     task = tasks[task_id]
     if request.method == 'POST':
-        tasks.remove(task)
+        tasks.pop(task)
         return redirect(url_for('index'))  
     # Redirect to the home page after editing , client side , 
     # It changes the URL in the browser and prevents form resubmission on refresh.
 
 
 @app.route("/tasks_completed/<int:task_id>" , methods=['POST' , 'GET'])
-def task_completed(task_id):
-    task = tasks[task_id]
-    if request.method == 'POST':
-        if task['done'] :
-            completion_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date completed
-            task = {'done': True ,'date_completed':completion_date}
-            tasks_done.append(task)  #append tasks in lists
-            
-    return render_template('task_completed.html', task = task, task_id =task_id)
+def tasks_completed(task_id):
+    # if request.method == 'POST':  
+        task = tasks[task_id]  
+        
+        task['done'] = True
+        task['date_completed'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S') #date completed
+
+        tasks_done.append(task)#append tasks in lists
+        tasks.pop(task_id)  
+        # return redirect(url_for('index'))
+        return render_template('tasks_completed.html', tasks_done=tasks_done, task_id= task_id) #renders updated html
+    
+    
 
 
 if __name__ == '__main__':

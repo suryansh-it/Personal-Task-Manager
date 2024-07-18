@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% block title %}Create Task{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Completed Tasks{% endblock %} {%
+block content %}
 
 <h2>Task List</h2>
 <table class="table">
@@ -7,8 +7,8 @@ content %}
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Date</th>
-      <th>Actions</th>
+      <th>Date Added</th>
+      <th>Date Completed</th>
     </tr>
   </thead>
   <tbody>
@@ -16,9 +16,8 @@ content %}
     <tr>
       <td>{{ task.title }}</td>
       <td>{{ task.description }}</td>
-      <td>
-        Added on {{ task.date_created }} ; Completed on {{ task.date_created }}
-      </td>
+      <td>Added on {{ task.date_created }}</td>
+      <td>Completed on {{ task.date_completed }}</td>
     </tr>
     {% endfor %}
   </tbody>
